@@ -10,15 +10,17 @@
             <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
                 <x-app-logo />
             </a>
+            
 
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    <flux:navlist.item icon="home"  :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                </flux:navlist.group>
+
+                <flux:navlist.group :heading="__('Ask AI')" class="grid">
+                    <flux:navlist.item icon="chat-bubble-bottom-center"  :href="route('AskAI')" :current="request()->routeIs('AskAI')" wire:navigate>{{ __('Tanya AI aja gasi') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
-            <flux:navlist.group :heading="__('Integrations')" class="grid">
-                <livewire:lm-studio-toggle />
-            </flux:navlist.group>
 
             
             <flux:spacer />

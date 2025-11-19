@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
-use App\Livewire\LmStudioToggle;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,6 +11,10 @@ Route::get('/', function () {
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+Route::view('AskAI', 'AskAI')
+    ->middleware(['auth', 'verified'])
+    ->name('AskAI');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
