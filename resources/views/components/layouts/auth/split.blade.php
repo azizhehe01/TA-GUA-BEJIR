@@ -9,9 +9,11 @@
                 <div class="absolute inset-0 bg-neutral-900"></div>
                 <a href="{{ route('home') }}" class="relative z-20 flex items-center gap-3 text-lg font-semibold text-white" wire:navigate>
                     <span class="flex h-17 w-17 items-center justify-center rounded-md overflow-hidden ">
-                        <img src="{{ asset('images/icon_robot_puti.png') }}" alt="PUTI Logo" class="h-50 w-50 object-contain" />
+                        <img src="{{ asset('images/icon-puti.png') }}" alt="PUTI Logo" class="h-50 w-50 object-contain" />
                     </span>
-                    <span class="tracking-wide text-xl font-bold">PUTI</span>
+                    <span class="flex h-17 w-17 items-center justify-center rounded-md overflow-hidden ">
+                        <img src="{{ asset('images/icon-siem-aziz.png') }}" alt="PUTI Logo" class="h-50 w-50 object-contain" />
+                    </span>
                 </a>        
                 {{-- kalau ada slot aside dari komponen (misal login.blade.php), tampilkan --}}
                 @isset($aside)
