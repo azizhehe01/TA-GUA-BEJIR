@@ -3,7 +3,7 @@
     <head>
         @include('partials.head')
     </head>
-        <style>
+    <style>
         .chat-box {
             scrollbar-width: none;           /* Firefox */
         }
@@ -27,6 +27,10 @@
 
                 <flux:navlist.group :heading="__('Ask AI')" class="grid">
                     <flux:navlist.item icon="chat-bubble-bottom-center"  :href="route('AskAI')" :current="request()->routeIs('AskAI')" wire:navigate>{{ __('Tanya AI aja gasi') }}</flux:navlist.item>
+                </flux:navlist.group>
+
+                <flux:navlist.group :heading="__('Kelola user')" class="grid">
+                    <flux:navlist.item icon="user-plus"  :href="route('AskAI')" :current="request()->routeIs('AskAI')" wire:navigate>{{ __('Kelola user') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

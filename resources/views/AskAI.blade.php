@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function addUserBubble(text) {
         if (!chatBox) return;
         const el = document.createElement("div");
-        el.className = "self-end max-w-[80%] bg-gradient-to-r from-orange-400 to-amber-200 text-white rounded-4xl shadow p-2 break-words";
+        el.className = "self-end max-w-[80%] bg-orange-400 text-white rounded-4xl shadow p-2 break-words";
         el.innerText = text;
         chatBox.appendChild(el);
         scrollChatToBottom();
