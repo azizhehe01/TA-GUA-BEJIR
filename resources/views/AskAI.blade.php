@@ -29,7 +29,7 @@
         {{-- Card --}}
         <div class="w-[380px] bg-white dark:bg-slate-900 rounded-2xl shadow-lg p-6 backdrop-blur-md border border-white/40 dark:border-slate-700/40">
 
-            <div class="flex flex-col gap-3 text-sm font-medium text-slate-600 dark:text-white">
+            <div class="flex flex-col gap-3 text-sm font-medium">
                 @foreach([
                     "Berikan saya wazuh alert",
                     "Berikan saya daftar agent di Wazuh saya",
@@ -37,7 +37,7 @@
                 ] as $item)
                     <button type="button" class="starter-btn relative overflow-hidden w-full text-left px-4 py-3 rounded-4xl transition-all duration-300 text-slate-600 dark:text-white group shadow">
                         <span class="absolute inset-0 bg-gradient-to-r from-orange-400 to-amber-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></span>
-                        <span class="relative group-hover:text-white">
+                        <span class="relative group-hover:text-yellow-800">
                             {{ $item }}
                         </span>
                     </button>

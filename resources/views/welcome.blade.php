@@ -46,7 +46,7 @@
                         </a>
 
                         <a href="{{ route('login') }}"
-                           class="px-6 py-2 bg-gradient-to-r from-orange-400 to-amber-300 text-white rounded-full font-semibold hover:bg-purple-700 shadow transition">
+                           class="px-6 py-2 bg-gradient-to-r from-orange-400 to-amber-300 text-white rounded-full font-semibold  shadow transition">
                             LOGIN
                         </a>
                     @endguest
