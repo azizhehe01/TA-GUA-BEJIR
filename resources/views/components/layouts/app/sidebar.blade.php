@@ -29,9 +29,17 @@
                     <flux:navlist.item icon="chat-bubble-bottom-center"  :href="route('AskAI')" :current="request()->routeIs('AskAI')" wire:navigate>{{ __('Tanya AI aja gasi') }}</flux:navlist.item>
                 </flux:navlist.group>
 
-                <flux:navlist.group :heading="__('ManageUser')" class="grid">
-                    <flux:navlist.item icon="user-plus"  :href="route('ManageUser')" :current="request()->routeIs('ManageUser')" wire:navigate>{{ __('Kelola user') }}</flux:navlist.item>
-                </flux:navlist.group>
+                @if(auth()->user() && auth()->user()->is_admin)
+                    <flux:navlist.group :heading="__('Manage User')" class="grid">
+                        <flux:navlist.item 
+                            icon="user-plus"
+                            :href="route('manage-user')"
+                            :current="request()->routeIs('manage-user')"
+                            wire:navigate>
+                            {{ __('Kelola user') }}
+                        </flux:navlist.item>
+                    </flux:navlist.group>
+                @endif
             </flux:navlist>
 
             

@@ -66,6 +66,11 @@ new #[Layout('components.layouts.auth.split')] class extends Component {
                 'email' => __('auth.failed'),
             ]);
         }
+        if (!$user->active) {
+            throw ValidationException::withMessages([
+                'email' => 'Akun lo belum di aprove sama si admin euy.',
+            ]);
+        }
 
         return $user;
     }

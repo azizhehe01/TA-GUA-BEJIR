@@ -1,12 +1,12 @@
-<x-layouts.chatApp :title="__('ManageUser')">
+<x-layouts.chatApp :title="__('Kelola Pengguna')">
     <div class="h-full w-full p-6 bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800">
         <div class="max-w-7xl mx-auto">
             <!-- Header -->
             <div class="flex justify-between items-center mb-8">
                 <h1 class="text-3xl font-bold text-slate-600 dark:text-white">Manajemen pengguna</h1>
-                <button class="bg-gradient-to-r from-orange-400 to-amber-300 text-yellow-800 px-6 py-2 rounded-lg flex items-center gap-2 font-semibold shadow ">
+                <a href="{{ route('register') }}" class="bg-gradient-to-r from-orange-400 to-amber-300 text-yellow-800 px-6 py-2 rounded-lg flex items-center gap-2 font-semibold shadow ">
                     <span>+</span> Tambah Pengguna
-                </button>
+                </a>
             </div>
 
             <!-- Tabs -->

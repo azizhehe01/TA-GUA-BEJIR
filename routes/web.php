@@ -16,9 +16,13 @@ Route::view('AskAI', 'AskAI')
     ->middleware(['auth', 'verified'])
     ->name('AskAI');
 
-Route::view('ManageUser', 'ManageUser')
-    ->middleware(['auth', 'verified'])
-    ->name('ManageUser');
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/manage-user', function () {
+        return view('ManageUser');
+    })->name('manage-user');
+});
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
