@@ -3,6 +3,23 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\ManageUserController;
+
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    Route::get('/manage-user', [ManageUserController::class, 'index'])
+        ->name('manage-user');
+
+    Route::post('/manage-user/{user}/toggle-status', [ManageUserController::class, 'updateStatus'])
+        ->name('manage-user.toggle-status');
+
+    Route::post('/manage-user/{user}/update-role', [ManageUserController::class, 'updateRole'])
+        ->name('manage-user.update-role');
+
+    Route::delete('/manage-user/{user}', [ManageUserController::class, 'delete'])
+        ->name('manage-user.delete');
+});
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,14 +32,6 @@ Route::view('dashboard', 'dashboard')
 Route::view('AskAI', 'AskAI')
     ->middleware(['auth', 'verified'])
     ->name('AskAI');
-
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/manage-user', function () {
-        return view('ManageUser');
-    })->name('manage-user');
-});
-
-
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

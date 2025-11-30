@@ -91,7 +91,7 @@
                 <!-- Left Content -->
                 <div class="flex flex-col justify-center">
                     <h1 class="text-4xl md:text-5xl font-bold text-slate-600 dark:text-slate-200 mb-6 leading-tight">
-                        Your Smart Assistant<br>for <span class="text-blue-500">Wazuh</span><span class="text-yellow-500">.</span>
+                        Your Smart Assistant<br>for <a href="https://wazuh.com/" target="_blank" class="text-blue-500 hover:underline">Wazuh</a><a href="https://wazuh.com/" target="_blank" class="text-yellow-500 hover:underline">.</a>
                     </h1>
                     <p class="text-gray-600 dark:text-slate-200 text-base leading-relaxed mb-8">
                         Dengan integrasi Wazuh dan kecerdasan buatan, kamu dapat memantau keamanan sistem,
