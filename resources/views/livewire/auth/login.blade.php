@@ -33,6 +33,11 @@ new #[Layout('components.layouts.auth.split')] class extends Component {
 
         $user = $this->validateCredentials();
 
+        if (! $user->active) {
+            $this->redirect(route('pending-approval'), navigate: true);
+            return;
+        }
+
         if (Features::canManageTwoFactorAuthentication() && $user->hasEnabledTwoFactorAuthentication()) {
             Session::put([
                 'login.id' => $user->getKey(),
@@ -64,11 +69,6 @@ new #[Layout('components.layouts.auth.split')] class extends Component {
 
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),
-            ]);
-        }
-        if (!$user->active) {
-            throw ValidationException::withMessages([
-                'email' => 'Akun lo belum di aprove sama si admin euy.',
             ]);
         }
 

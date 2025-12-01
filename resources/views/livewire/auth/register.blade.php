@@ -27,11 +27,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
         event(new Registered(($user = User::create($validated))));
 
-        Auth::login($user);
-
-        Session::regenerate();
-
-        $this->redirectIntended(route('dashboard', absolute: false), navigate: true);
+        $this->redirect(route('pending-approval'), navigate: true);
     }
 }; ?>
 

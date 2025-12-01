@@ -45,12 +45,17 @@ Route::middleware(['auth'])->group(function () {
             when(
                 Features::canManageTwoFactorAuthentication()
                     && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
-                ['password.confirm'],
+                ['auth.password.confirm'],
                 [],
             ),
         )
         ->name('two-factor.show');
 });
+
+Route::get('/pending-approval', function () {
+    return view('pending-approval');
+})->middleware('guest')->name('pending-approval');
+
 
 
 require __DIR__.'/auth.php';
