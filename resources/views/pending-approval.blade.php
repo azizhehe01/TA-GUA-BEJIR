@@ -19,7 +19,7 @@
         <!-- Moved status message to bottom right corner -->
         <div class="text-right">
             <p class="text-3xl text-blue-800 font-semibold max-w-1xl ml-[30%]">
-                Status persetujuan Anda sedang diproses... Silakan kembali lagi nanti 🫡
+                Status persetujuan anda sedang diproses... Silakan kembali lagi nanti 🫡
             </p>
         </div>
     </div>
