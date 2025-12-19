@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\PendingApprovalOnly;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -13,6 +14,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'admin' => \App\Http\Middleware\Admin::class,
+        ]);
+    })
+     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'pending.approval' => PendingApprovalOnly::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

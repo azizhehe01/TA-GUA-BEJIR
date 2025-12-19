@@ -54,7 +54,10 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/pending-approval', function () {
     return view('pending-approval');
-})->middleware('guest')->name('pending-approval');
+})
+->middleware('pending.approval')
+->name('pending-approval');
+
 
 
 

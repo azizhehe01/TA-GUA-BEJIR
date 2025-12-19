@@ -34,6 +34,8 @@ new #[Layout('components.layouts.auth.split')] class extends Component {
         $user = $this->validateCredentials();
 
         if (! $user->active) {
+            session()->put('pending_approval_user', $user->id);
+                    
             $this->redirect(route('pending-approval'), navigate: true);
             return;
         }
