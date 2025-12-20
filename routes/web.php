@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\ManageUserController;
+use App\Http\Controllers\DashboardController;
 
 Route::middleware(['auth', 'admin'])->group(function () {
 
@@ -25,9 +26,12 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
 
 Route::view('AskAI', 'AskAI')
     ->middleware(['auth', 'verified'])
