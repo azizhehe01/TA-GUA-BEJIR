@@ -155,27 +155,40 @@
                         </p>
                     @endif
                 </div>
-
+                <!-- Alert Health Score -->
                 <div class="col-span-2 bg-purple-300 p-4 rounded-lg text-black relative">
                     <div class="flex justify-between items-start">
-                        <div>
-                            <div class="text-5xl font-bold mb-3">57/80</div>
-                            <p class="text-lg font-semibold">Bed Occupancy Rate</p>
-                            <p class="text-base">60.4%^</p>
-                            <p class="mb-2 text-2xl">...</p>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" stroke-width="2"/>
-                                <path d="M8 14s1.5 2 4 2 4-2 4-2" stroke-width="2" stroke-linecap="round"/>
-                                <circle cx="9" cy="9" r="1" fill="currentColor"/>
-                                <circle cx="15" cy="9" r="1" fill="currentColor"/>
+                        @if(! $low['ok'])
+                            <div class="flex items-center mb-8 mt-10 text-6xl font-bold">
+                                😵
+                            </div>
+                            <div>
+                                <p class="mb-8 mt-10 text-2xl">
+                                    ⚠ {{ $low['error'] }}
+                                </p>
+                            </div>
+                        @else
+                            <div>
+                                <div class="text-5xl font-bold mb-3">
+                                    {{ $healthy }}/{{ $total }}
+                                </div>
+                                <p class="text-lg font-semibold">Alert Health Score</p>
+                                <p class="text-base">{{ $healthPercent }}%</p>
+                                <p class="mb-2 text-2xl">Alert level rendah–menengah (24 jam)</p>
+                            </div>
+                            <div class="flex items-center gap-2 text-6xl font-bold">
+                                @if($healthPercent >= 80)
+                                    😎
+                                @elseif($healthPercent >= 60)
+                                    😐
+                                @else
+                                    😱
+                                @endif
+                            </div>
+                            <svg class="absolute bottom-4 right-4 w-16 h-16 opacity-30" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20 7h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v3H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h1v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9h1a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"/>
                             </svg>
-                            <span class="text-4xl font-bold">2%</span>
-                        </div>
-                        <svg class="absolute bottom-4 right-4 w-16 h-16 opacity-30" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M20 7h-4V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v3H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h1v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9h1a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"/>
-                        </svg>
+                        @endif
                     </div>
                 </div>
             </div>
