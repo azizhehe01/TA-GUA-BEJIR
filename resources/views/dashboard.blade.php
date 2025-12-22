@@ -196,19 +196,35 @@
             <!-- Bottom Section -->
             <div class="md:col-span-4 grid grid-cols-1 md:grid-cols-3 gap-4">
                 
-                <!-- Premium Healthcare Center -->
+                <!-- agent active section -->
                 <div class="bg-[#f0ecdd] border-2 border-gray-300 p-4 rounded-lg text-black">
-                    <div class="flex items-center gap-2 mb-3">
-                        <h2 class="text-2xl font-bold">The Premium</h2>
-                        <span class="text-2xl">✱</span>
-                    </div>
-                    <h2 class="text-2xl font-bold mb-3">Heathcare —<br>Center</h2>
-                    <div class="border-t-2 border-gray-300 pt-4 flex justify-between items-center">
-                        <div>
-                            <p class="text-sm font-semibold">Lifecare</p>
-                            <p class="text-sm">International</p>
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-2xl font-bold">
+                                Active Agents <span class="text-2xl">✱</span>
+                                <br>
+                                <span class="text-[3.5rem] font-bold">
+                                   @if($agents['ok'])
+                                        {{ $agents['count'] }}
+                                    @else
+                                        —
+                                    @endif 
+                                </span>
+                            </h2>
                         </div>
-                        <span class="text-sm">(Global)</span>
+                        @if($agents['ok'])    
+                            <img src="{{ asset('images/satelit.svg') }}" class="w-20 h-20" alt="Satelit"/>
+                        @else
+                            <img src="{{ asset('images/satelit-meledak.svg') }}" class="w-20 h-20" alt="Duaarrrr"/>
+                        @endif
+                    </div>
+                    <div class="border-t-2 border-gray-300 pt-3 flex justify-between items-center text-sm">
+                        <span>Status</span>
+                        @if($agents['ok'])
+                            <span class="font-semibold text-green-700">Connected</span>
+                        @else
+                            <span class="font-semibold text-red-600">Unavailable</span>
+                        @endif
                     </div>
                 </div>
 

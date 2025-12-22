@@ -13,6 +13,7 @@ class DashboardController extends Controller
         $high     = WazuhService::highLast24h();
         $medium   = WazuhService::mediumLast24h();
         $low      = WazuhService::lowLast24h();
+        $agents   = WazuhService::activeAgents();
 
         $total = collect([$critical, $high, $medium, $low])
             ->where('ok', true)
@@ -24,6 +25,6 @@ class DashboardController extends Controller
             ? round(($healthy / $total) * 100, 1)
             : 0;
     
-        return view('dashboard', compact('critical', 'high', 'medium', 'low', 'total', 'healthy', 'healthPercent'));
+        return view('dashboard', compact('critical', 'high', 'medium', 'low', 'total', 'healthy', 'healthPercent', 'agents'));
     }
 }
