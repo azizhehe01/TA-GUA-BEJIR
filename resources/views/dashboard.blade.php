@@ -230,25 +230,31 @@
 
                 <!-- alert trend -->
                 <div class="bg-pink-400  p-4 rounded-lg text-black">
-                    <h2 class="text-2xl font-bold text-white">Alert Trend (24h vs previous 24h)</h2>
+                    @if($growth['ok'])
+                        <h2 class="text-2xl font-bold text-white">Alert Trend (24h vs previous 24h)</h2>
                 
-                    <div class="flex items-center gap-3 mb-2">
-                        @if($growth['up'])
-                            <flux:icon.arrow-trending-up class="w-10 h-10 text-red-600" />
-                            <span class="text-5xl font-bold text-red-700">{{ abs($growth['percent']) }}%</span>
-                        @else
-                            <flux:icon.arrow-trending-down class="w-10 h-10 text-green-600" />
-                            <span class="text-5xl font-bold text-green-700">{{ abs($growth['percent']) }}%</span>
-                        @endif
-                    </div>
-                
-                    <div class="flex justify-between items-center text-sm text-gray-700 border-t-2  pt-3">
-                        <div>
-                            <p class="font-semibold">{{ $growth['today'] }} alerts</p>
-                            <p class="opacity-70">Last 24 hours</p>
+                        <div class="flex items-center gap-3 mb-2">
+                            @if($growth['up'])
+                                <flux:icon.arrow-trending-up class="w-10 h-10 text-red-600" />
+                                <span class="text-5xl font-bold text-red-700">{{ abs($growth['percent']) }}%</span>
+                            @else
+                                <flux:icon.arrow-trending-down class="w-10 h-10 text-green-600" />
+                                <span class="text-5xl font-bold text-green-700">{{ abs($growth['percent']) }}%</span>
+                            @endif
                         </div>
-                        <span class="opacity-70">Prev: {{ $growth['yesterday'] }}</span>
-                    </div>
+
+                        <div class="flex justify-between items-center text-sm text-gray-700 border-t-2  pt-3">
+                            <div>
+                                <p class="font-semibold">{{ $growth['today'] }} alerts</p>
+                                <p class="opacity-70">Last 24 hours</p>
+                            </div>
+                            <span class="opacity-70">Prev: {{ $growth['yesterday'] }}</span>
+                        </div>
+                    @else
+                        <div class="flex justify-center items-center">
+                            <img src="{{ asset('images/pusing.svg') }}" class="w-50 h-50" alt="Pusing">
+                        </div>
+                    @endif
                 </div>
 
 

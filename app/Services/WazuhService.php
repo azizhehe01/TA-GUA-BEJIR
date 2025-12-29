@@ -55,7 +55,7 @@ class WazuhService
         int $max,
         string $from,
         string $to
-    ): int {
+    ): array {
         try {
             $response = Http::withOptions([
                 'verify'  => false,
@@ -76,11 +76,18 @@ class WazuhService
                 ]
             ]);
 
-            return $response->json()['count'] ?? 0;
+            return [
+                'ok'    => true,
+                'count' => $response->json()['count'] ?? 0,
+            ];
         } catch (Throwable $e) {
-            return 0;
+            return [
+                'ok'    => false,
+                'count' => null,
+            ];
         }
     }
+
     // untuk mengambil token API Wazuh digunakan untuk login wazuh api
     private static function apiToken(): ?string
     {
@@ -104,10 +111,19 @@ class WazuhService
     public static function alertGrowth24h(): array
     {
         return Cache::remember('wazuh_alert_growth_24h', 60, function () {
-
-            $today = self::countByLevelBetween(0, 99, 'now-24h', 'now');
-            $yesterday = self::countByLevelBetween(0, 99, 'now-48h', 'now-24h');
-
+        
+            $todayRes = self::countByLevelBetween(0, 99, 'now-24h', 'now');
+            $yesterdayRes = self::countByLevelBetween(0, 99, 'now-48h', 'now-24h');
+        
+            if (! $todayRes['ok'] || ! $yesterdayRes['ok']) {
+                return [
+                    'ok' => false,
+                ];
+            }
+        
+            $today = $todayRes['count'];
+            $yesterday = $yesterdayRes['count'];
+        
             if ($yesterday == 0 && $today > 0) {
                 $percent = 100;
             } elseif ($yesterday > 0) {
@@ -115,8 +131,9 @@ class WazuhService
             } else {
                 $percent = 0;
             }
-
+        
             return [
+                'ok'        => true,
                 'today'     => $today,
                 'yesterday' => $yesterday,
                 'percent'   => round($percent, 1),
