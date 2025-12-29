@@ -8,6 +8,7 @@ use Throwable;
 
 class WazuhService
 {
+    // untuk menghitung jumlah alert berdasarkan level dengan caching
     private static function countByLevel(
         int $min,
         int $max,
@@ -48,6 +49,39 @@ class WazuhService
         });
     }
 
+    // untuk menghitung perbandingan jumlah alert 24jam sekarang vs 24jam sebelumnya
+    private static function countByLevelBetween(
+        int $min,
+        int $max,
+        string $from,
+        string $to
+    ): int {
+        try {
+            $response = Http::withOptions([
+                'verify'  => false,
+                'timeout' => 2,
+            ])
+            ->withBasicAuth(
+                config('wazuh.username'),
+                config('wazuh.password')
+            )
+            ->post(config('wazuh.endpoint').'/wazuh-alerts-*/_count', [
+                'query' => [
+                    'bool' => [
+                        'must' => [
+                            ['range' => ['rule.level' => ['gte' => $min, 'lte' => $max]]],
+                            ['range' => ['timestamp' => ['gte' => $from, 'lte' => $to]]]
+                        ]
+                    ]
+                ]
+            ]);
+
+            return $response->json()['count'] ?? 0;
+        } catch (Throwable $e) {
+            return 0;
+        }
+    }
+    // untuk mengambil token API Wazuh digunakan untuk login wazuh api
     private static function apiToken(): ?string
     {
         try {
@@ -65,6 +99,30 @@ class WazuhService
         } catch (Throwable $e) {
             return null;
         }
+    }
+
+    public static function alertGrowth24h(): array
+    {
+        return Cache::remember('wazuh_alert_growth_24h', 60, function () {
+
+            $today = self::countByLevelBetween(0, 99, 'now-24h', 'now');
+            $yesterday = self::countByLevelBetween(0, 99, 'now-48h', 'now-24h');
+
+            if ($yesterday == 0 && $today > 0) {
+                $percent = 100;
+            } elseif ($yesterday > 0) {
+                $percent = (($today - $yesterday) / $yesterday) * 100;
+            } else {
+                $percent = 0;
+            }
+
+            return [
+                'today'     => $today,
+                'yesterday' => $yesterday,
+                'percent'   => round($percent, 1),
+                'up'        => $today >= $yesterday,
+            ];
+        });
     }
     public static function activeAgents(): array
     {

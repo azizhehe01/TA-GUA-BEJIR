@@ -228,16 +228,26 @@
                     </div>
                 </div>
 
-                <!-- Patient Growth -->
-                <div class="bg-[#8f8104] p-4 rounded-lg text-black">
-                    <p class="text-lg font-semibold mb-3">Patient Growth</p>
-                    <div class="text-6xl font-bold mb-3">^35%</div>
-                    <div class="flex justify-between items-center">
+                <!-- alert trend -->
+                <div class="bg-pink-400  p-4 rounded-lg text-black">
+                    <h2 class="text-2xl font-bold text-white">Alert Trend (24h vs previous 24h)</h2>
+                
+                    <div class="flex items-center gap-3 mb-2">
+                        @if($growth['up'])
+                            <flux:icon.arrow-trending-up class="w-10 h-10 text-red-600" />
+                            <span class="text-5xl font-bold text-red-700">{{ abs($growth['percent']) }}%</span>
+                        @else
+                            <flux:icon.arrow-trending-down class="w-10 h-10 text-green-600" />
+                            <span class="text-5xl font-bold text-green-700">{{ abs($growth['percent']) }}%</span>
+                        @endif
+                    </div>
+                
+                    <div class="flex justify-between items-center text-sm text-gray-700 border-t-2  pt-3">
                         <div>
-                            <p class="text-sm font-semibold">Lifecare</p>
-                            <p class="text-sm">International</p>
+                            <p class="font-semibold">{{ $growth['today'] }} alerts</p>
+                            <p class="opacity-70">Last 24 hours</p>
                         </div>
-                        <span class="text-sm">(People)</span>
+                        <span class="opacity-70">Prev: {{ $growth['yesterday'] }}</span>
                     </div>
                 </div>
 
