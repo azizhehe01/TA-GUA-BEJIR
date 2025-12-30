@@ -256,46 +256,102 @@
                         </div>
                     @endif
                 </div>
-
                 @php
                     $values = $chart7d['values'] ?? [];
                     $labels = $chart7d['labels'] ?? [];
 
-                    $max = max($values ?: [1]); // biar ga div/0
-                    $width = 350;
-                    $height = 100;
-                    $stepX = count($values) > 1 ? $width / (count($values) - 1) : $width;
+                    $max = max($values ?: [1]); // anti div/0
 
-                    $points = collect($values)->map(function ($val, $i) use ($max, $height, $stepX) {
-                        $x = $i * $stepX;
-                        $y = $height - (($val / $max) * ($height - 10));
-                        return "{$x},{$y}";
-                    })->implode(' ');
+                    $width  = 350;
+                    $height = 100;
+
+                    // padding biar gak kepotong
+                    $paddingX = 12;
+                    $paddingY = 12;
+
+                    $usableWidth  = $width  - ($paddingX * 2);
+                    $usableHeight = $height - ($paddingY * 2);
+
+                    $stepX = count($values) > 1
+                        ? $usableWidth / (count($values) - 1)
+                        : $usableWidth;
+
+                    $points  = [];
+                    $circles = [];
+
+                    foreach ($values as $i => $val) {
+                        $x = $paddingX + ($i * $stepX);
+                        $y = $height - $paddingY - (($val / $max) * $usableHeight);
+                    
+                        $points[] = "{$x},{$y}";
+                        $circles[] = [
+                            'x'     => $x,
+                            'y'     => $y,
+                            'value' => $val,
+                        ];
+                    }
+                
+                    $points = implode(' ', $points);
                 @endphp
-                <!-- trend 7 hari terahir -->
                 <div class="bg-[#d7e3d5] border-2 border-gray-300 p-4 rounded-lg relative text-black">
                     <div class="flex justify-between items-center mb-3">
-                        <h3 class="text-lg font-semibold">Alert Trend (7 Days) —</h3>
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-lg font-semibold">
+                                Alert Trend (7 Days) —
+                            </h3>
+                                    
+                            <span class="
+                                {{ $chart7d['up'] ? 'bg-red-500' : 'bg-green-500' }}
+                                text-white text-xs px-3 py-1 rounded-full font-semibold
+                            ">
+                                {{ $chart7d['up'] ? '+' : '' }}{{ $chart7d['percent'] }} %
+                            </span>
+                        </div>
+                                    
                         <div class="flex gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <circle cx="12" cy="12" r="10" stroke-width="2"/>
                             </svg>
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path d="M7 17L17 7M17 7H7M17 7v10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 17L17 7M17 7H7M17 7v10"
+                                      stroke-width="2"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"/>
                             </svg>
                         </div>
                     </div>
-                    
                     <div class="relative h-32 mb-3">
-                        <span class="absolute -top-2 right-8 bg-orange-500 text-white text-xs px-3 py-1 rounded-full font-semibold">+42.85 %</span>
                         @if($chart7d['ok'])
                             <svg class="w-full h-full" viewBox="0 0 350 100" preserveAspectRatio="none">
+
+                                {{-- garis --}}
                                 <polyline 
                                     points="{{ $points }}"
                                     fill="none"
                                     stroke="currentColor"
                                     stroke-width="2"
                                 />
+
+                                {{-- titik + angka --}}
+                                @foreach($circles as $point)
+                                    <circle
+                                        cx="{{ $point['x'] }}"
+                                        cy="{{ $point['y'] }}"
+                                        r="3"
+                                        fill="currentColor"
+                                    />
+
+                                    <text
+                                        x="{{ $point['x'] }}"
+                                        y="{{ $point['y'] - 6 }}"
+                                        font-size="8"
+                                        text-anchor="middle"
+                                        fill="currentColor"
+                                    >
+                                        {{ number_format($point['value']) }}
+                                    </text>
+                                @endforeach
+
                             </svg>
                         @else
                             <div class="flex justify-center items-center h-full text-sm text-gray-500">
@@ -303,7 +359,6 @@
                             </div>
                         @endif
                     </div>
-                    
                     <div class="flex justify-between text-xs text-gray-600">
                         @foreach($labels as $day)
                             <span>{{ $day }}</span>

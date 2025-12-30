@@ -107,7 +107,7 @@ class WazuhService
             return null;
         }
     }
-
+    // untuk menghitung pertumbuhan alert dalam 24 jam terakhir
     public static function alertGrowth24h(): array
     {
         return Cache::remember('wazuh_alert_growth_24h', 60, function () {
@@ -141,6 +141,7 @@ class WazuhService
             ];
         });
     }
+    // untuk menghitung jumlah agent aktif dengan caching
     public static function activeAgents(): array
     {
         return Cache::remember('wazuh_agents_active', 60, function () {
@@ -201,11 +202,11 @@ class WazuhService
         return self::countByLevel(0, 6, 'wazuh_low_24h');
     }
 
-    // untuk alert trends dalam 7 hari terakhir
+    // untuk alert trends dalam 14 hari terakhir
     public static function alertsLast7Days(): array
     {
         return Cache::remember('wazuh_alerts_7days', 300, function () {
-        
+
             try {
                 $response = Http::withOptions([
                     'verify'  => false,
@@ -223,7 +224,7 @@ class WazuhService
                                 [
                                     'range' => [
                                         'timestamp' => [
-                                            'gte' => 'now-7d/d',
+                                            'gte' => 'now-14d/d',
                                             'lte' => 'now'
                                         ]
                                     ]
@@ -251,29 +252,51 @@ class WazuhService
                         ]
                     ]
                 ]);
-            
+
                 $buckets = $response->json('aggregations.alerts_per_day.buckets') ?? [];
-            
-                $labels = [];
-                $values = [];
-            
-                foreach ($buckets as $bucket) {
-                    $labels[] = $bucket['key_as_string'];
-                    $values[] = $bucket['doc_count'];
+
+                // ambil 14 hari
+                $counts = array_column($buckets, 'doc_count');
+
+                // split
+                $previous7 = array_slice($counts, 0, 7);
+                $current7  = array_slice($counts, 7, 7);
+
+                $previousTotal = array_sum($previous7);
+                $currentTotal  = array_sum($current7);
+
+                // hitung persen
+                if ($previousTotal == 0 && $currentTotal > 0) {
+                    $percent = 100;
+                } elseif ($previousTotal > 0) {
+                    $percent = (($currentTotal - $previousTotal) / $previousTotal) * 100;
+                } else {
+                    $percent = 0;
                 }
-            
+
+                // label + value hanya 7 hari terakhir (buat chart)
+                $labels = [];
+                foreach (array_slice($buckets, 7, 7) as $bucket) {
+                    $labels[] = $bucket['key_as_string'];
+                }
+
                 return [
-                    'ok'     => true,
-                    'labels' => $labels,
-                    'values' => $values,
+                    'ok'      => true,
+                    'labels'  => $labels,
+                    'values'  => $current7,
+                    'total'   => $currentTotal,
+                    'percent' => round($percent, 2),
+                    'up'      => $currentTotal >= $previousTotal,
                 ];
-            
+
             } catch (Throwable $e) {
                 return [
-                    'ok'     => false,
-                    'labels' => [],
-                    'values' => [],
-                    'error'  => 'Gagal mengambil data alert 7 hari'
+                    'ok'      => false,
+                    'labels'  => [],
+                    'values'  => [],
+                    'total'   => 0,
+                    'percent' => 0,
+                    'up'      => false,
                 ];
             }
         });
