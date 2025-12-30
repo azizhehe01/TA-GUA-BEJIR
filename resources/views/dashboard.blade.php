@@ -257,11 +257,25 @@
                     @endif
                 </div>
 
+                @php
+                    $values = $chart7d['values'] ?? [];
+                    $labels = $chart7d['labels'] ?? [];
 
-                <!-- Data Analytics Chart -->
+                    $max = max($values ?: [1]); // biar ga div/0
+                    $width = 350;
+                    $height = 100;
+                    $stepX = count($values) > 1 ? $width / (count($values) - 1) : $width;
+
+                    $points = collect($values)->map(function ($val, $i) use ($max, $height, $stepX) {
+                        $x = $i * $stepX;
+                        $y = $height - (($val / $max) * ($height - 10));
+                        return "{$x},{$y}";
+                    })->implode(' ');
+                @endphp
+                <!-- trend 7 hari terahir -->
                 <div class="bg-[#d7e3d5] border-2 border-gray-300 p-4 rounded-lg relative text-black">
                     <div class="flex justify-between items-center mb-3">
-                        <h3 class="text-lg font-semibold">Data Analytics —</h3>
+                        <h3 class="text-lg font-semibold">Alert Trend (7 Days) —</h3>
                         <div class="flex gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <circle cx="12" cy="12" r="10" stroke-width="2"/>
@@ -274,28 +288,28 @@
                     
                     <div class="relative h-32 mb-3">
                         <span class="absolute -top-2 right-8 bg-orange-500 text-white text-xs px-3 py-1 rounded-full font-semibold">+42.85 %</span>
-                        <svg class="w-full h-full" viewBox="0 0 350 100" preserveAspectRatio="none">
-                            <polyline 
-                                points="0,60 50,70 100,50 150,40 200,30 250,45 300,35 350,40" 
-                                fill="none" 
-                                stroke="currentColor" 
-                                stroke-width="2"
-                            />
-                        </svg>
+                        @if($chart7d['ok'])
+                            <svg class="w-full h-full" viewBox="0 0 350 100" preserveAspectRatio="none">
+                                <polyline 
+                                    points="{{ $points }}"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                />
+                            </svg>
+                        @else
+                            <div class="flex justify-center items-center h-full text-sm text-gray-500">
+                                Data unavailable
+                            </div>
+                        @endif
                     </div>
                     
                     <div class="flex justify-between text-xs text-gray-600">
-                        <span>Mon</span>
-                        <span>Tue</span>
-                        <span>Wed</span>
-                        <span>Thu</span>
-                        <span>Fri</span>
-                        <span>Sat</span>
-                        <span>Sun</span>
+                        @foreach($labels as $day)
+                            <span>{{ $day }}</span>
+                        @endforeach
                     </div>
                 </div>
-
             </div>
-
         </div>
 </x-layouts.app>

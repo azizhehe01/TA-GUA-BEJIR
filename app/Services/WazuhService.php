@@ -201,4 +201,81 @@ class WazuhService
         return self::countByLevel(0, 6, 'wazuh_low_24h');
     }
 
+    // untuk alert trends dalam 7 hari terakhir
+    public static function alertsLast7Days(): array
+    {
+        return Cache::remember('wazuh_alerts_7days', 300, function () {
+        
+            try {
+                $response = Http::withOptions([
+                    'verify'  => false,
+                    'timeout' => 3,
+                ])
+                ->withBasicAuth(
+                    config('wazuh.username'),
+                    config('wazuh.password')
+                )
+                ->post(config('wazuh.endpoint') . '/wazuh-alerts-*/_search', [
+                    'size' => 0,
+                    'query' => [
+                        'bool' => [
+                            'must' => [
+                                [
+                                    'range' => [
+                                        'timestamp' => [
+                                            'gte' => 'now-7d/d',
+                                            'lte' => 'now'
+                                        ]
+                                    ]
+                                ],
+                                [
+                                    'range' => [
+                                        'rule.level' => [
+                                            'gte' => 0,
+                                            'lte' => 99
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    'aggs' => [
+                        'alerts_per_day' => [
+                            'date_histogram' => [
+                                'field' => 'timestamp',
+                                'calendar_interval' => '1d',
+                                'format' => 'EEE',
+                                'time_zone' => '+07:00',
+                                'min_doc_count' => 0
+                            ]
+                        ]
+                    ]
+                ]);
+            
+                $buckets = $response->json('aggregations.alerts_per_day.buckets') ?? [];
+            
+                $labels = [];
+                $values = [];
+            
+                foreach ($buckets as $bucket) {
+                    $labels[] = $bucket['key_as_string'];
+                    $values[] = $bucket['doc_count'];
+                }
+            
+                return [
+                    'ok'     => true,
+                    'labels' => $labels,
+                    'values' => $values,
+                ];
+            
+            } catch (Throwable $e) {
+                return [
+                    'ok'     => false,
+                    'labels' => [],
+                    'values' => [],
+                    'error'  => 'Gagal mengambil data alert 7 hari'
+                ];
+            }
+        });
+    }
 }
