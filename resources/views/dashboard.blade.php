@@ -293,37 +293,37 @@
                 
                     $points = implode(' ', $points);
                 @endphp
+                <!-- alert trend 7 days -->
                 <div class="bg-[#d7e3d5] border-2 border-gray-300 p-4 rounded-lg relative text-black">
-                    <div class="flex justify-between items-center mb-3">
-                        <div class="flex items-center gap-3">
-                            <h3 class="text-lg font-semibold">
-                                Alert Trend (7 Days) —
-                            </h3>
-                                    
-                            <span class="
-                                {{ $chart7d['up'] ? 'bg-red-500' : 'bg-green-500' }}
-                                text-white text-xs px-3 py-1 rounded-full font-semibold
-                            ">
-                                {{ $chart7d['up'] ? '+' : '' }}{{ $chart7d['percent'] }} %
-                            </span>
-                        </div>
-                                    
-                        <div class="flex gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" stroke-width="2"/>
-                            </svg>
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path d="M7 17L17 7M17 7H7M17 7v10"
-                                      stroke-width="2"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="relative h-32 mb-3">
-                        @if($chart7d['ok'])
-                            <svg class="w-full h-full" viewBox="0 0 350 100" preserveAspectRatio="none">
+                    @if ($chart7d['ok'])
+                        <div class="flex justify-between items-center mb-3">
+                            <div class="flex items-center gap-3">
+                                <h3 class="text-lg font-semibold">
+                                    Alert Trend (7 Days) —
+                                </h3>
 
+                                <span class="
+                                    {{ $chart7d['up'] ? 'bg-red-500' : 'bg-green-500' }}
+                                    text-white text-xs px-3 py-1 rounded-full font-semibold
+                                ">
+                                    {{ $chart7d['up'] ? '+' : '' }}{{ $chart7d['percent'] }} %
+                                </span>
+                            </div>
+
+                            <div class="flex gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                                </svg>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7 17L17 7M17 7H7M17 7v10"
+                                          stroke-width="2"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="relative h-32 mb-3">
+                            <svg class="w-full h-full" viewBox="0 0 350 100" preserveAspectRatio="none">
                                 {{-- garis --}}
                                 <polyline 
                                     points="{{ $points }}"
@@ -331,7 +331,6 @@
                                     stroke="currentColor"
                                     stroke-width="2"
                                 />
-
                                 {{-- titik + angka --}}
                                 @foreach($circles as $point)
                                     <circle
@@ -340,7 +339,6 @@
                                         r="3"
                                         fill="currentColor"
                                     />
-
                                     <text
                                         x="{{ $point['x'] }}"
                                         y="{{ $point['y'] - 6 }}"
@@ -351,19 +349,18 @@
                                         {{ number_format($point['value']) }}
                                     </text>
                                 @endforeach
-
                             </svg>
-                        @else
-                            <div class="flex justify-center items-center h-full text-sm text-gray-500">
-                                Data unavailable
-                            </div>
-                        @endif
-                    </div>
-                    <div class="flex justify-between text-xs text-gray-600">
-                        @foreach($labels as $day)
-                            <span>{{ $day }}</span>
-                        @endforeach
-                    </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600">
+                            @foreach($labels as $day)
+                                <span>{{ $day }}</span>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="flex justify-center items-center">
+                            <img src="{{ asset('images/buang_sampah.svg') }}" class="w-50 h-50" alt="Pusing">
+                        </div>                   
+                    @endif
                 </div>
             </div>
         </div>
