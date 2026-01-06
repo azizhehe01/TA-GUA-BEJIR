@@ -2,7 +2,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             
             <!-- critical section-->
-            <div class="bg-orange-600 p-4 rounded-lg relative overflow-hidden text-black">
+            <div class="bg-orange-600  p-4 rounded-lg relative overflow-hidden text-black">
                 <div class="text-6xl font-bold mb-8">
                     @if($critical['ok'])
                         {{ $critical['count'] }}
@@ -45,7 +45,7 @@
             </div>
 
             <!-- high severity section -->
-            <div class="bg-yellow-400 p-4 rounded-lg text-black">
+            <div class="bg-yellow-400  p-4 rounded-lg text-black">
                 <div class="text-6xl font-bold mb-6">
                     @if($high['ok'])
                         {{ $high['count'] }}
@@ -87,9 +87,9 @@
             </div>
 
             <!-- medium severity section -->
-            <div class="md:col-span-2 grid grid-cols-2 gap-4">
-                <!-- Hospitals In Cities -->
-                <div class="bg-blue-500 text-white p-4 rounded-lg">
+            <div class="md:col-span-2  grid grid-cols-2 gap-4">
+                <!-- medium severity -->
+                <div class="bg-blue-500  text-white p-4 rounded-lg">
                     <div class="flex justify-between items-start mb-3">
                         <div class="text-4xl font-bold">
                             @if($medium['ok'])
@@ -123,7 +123,7 @@
                 </div>
 
                 <!-- Low Severity -->
-                <div class="bg-green-500 text-white p-4 rounded-lg">
+                <div class="bg-green-500  text-white p-4 rounded-lg">
                     <div class="flex justify-between items-start mb-3">
                         <div class="text-4xl font-bold">
                             @if($low['ok'])
@@ -156,7 +156,7 @@
                     @endif
                 </div>
                 <!-- Alert Health Score -->
-                <div class="col-span-2 bg-purple-300 p-4 rounded-lg text-black relative">
+                <div class="col-span-2 bg-purple-300 p-4  rounded-lg text-black relative">
                     <div class="flex justify-between items-start">
                         @if(! $low['ok'])
                             <div class="flex items-center mb-8 mt-10 text-6xl font-bold">
@@ -197,7 +197,7 @@
             <div class="md:col-span-4 grid grid-cols-1 md:grid-cols-3 gap-4">
                 
                 <!-- agent active section -->
-                <div class="bg-[#f0ecdd] border-2 border-gray-300 p-4 rounded-lg text-black">
+                <div class="bg-[#f0ecdd]  border-2 border-gray-300 p-4 rounded-lg text-black">
                     <div class="flex justify-between items-start">
                         <div class="flex items-center gap-2">
                             <h2 class="text-2xl font-bold">
@@ -229,7 +229,7 @@
                 </div>
 
                 <!-- alert trend -->
-                <div class="bg-pink-400  p-4 rounded-lg text-black">
+                <div class="bg-pink-400   p-4 rounded-lg text-black">
                     @if($growth['ok'])
                         <h2 class="text-2xl font-bold text-white">Alert Trend (24h vs previous 24h)</h2>
                 
@@ -294,7 +294,7 @@
                     $points = implode(' ', $points);
                 @endphp
                 <!-- alert trend 7 days -->
-                <div class="bg-[#d7e3d5] border-2 border-gray-300 p-4 rounded-lg relative text-black">
+                <div class="bg-[#d7e3d5] border-2  border-gray-300 p-4 rounded-lg relative text-black">
                     @if ($chart7d['ok'])
                         <div class="flex justify-between items-center mb-3">
                             <div class="flex items-center gap-3">

@@ -55,8 +55,8 @@
             </div>
 
             <!-- Table -->
-            <div class="bg-white dark:bg-slate-900 rounded-lg shadow-lg backdrop-blur-md border border-slate-700/40 overflow-hidden">
-                <table class="w-full table-fixed">
+            <div class="bg-white dark:bg-slate-900 rounded-lg shadow-lg backdrop-blur-md border border-slate-700/40 overflow-x-auto">
+                <table class="min-w-[900px] w-full">
                     <thead class="bg-white dark:bg-slate-900 border-b border-slate-700/40 text-slate-600 dark:text-white">
                         <tr>
                             <th class="px-6 py-3 text-left text-sm font-medium  w-[40%]">PENGGUNA</th>
