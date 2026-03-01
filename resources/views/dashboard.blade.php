@@ -7,12 +7,9 @@
                     @if($critical['ok'])
                         {{ $critical['count'] }}
                         @if($critical['count'] > 0)
-                            😱
                         @else
-                            😎
                         @endif
                     @else
-                        😵
                     @endif
                 </div>
                 @if(! $critical['ok'])
@@ -50,12 +47,9 @@
                     @if($high['ok'])
                         {{ $high['count'] }}
                         @if($high['count'] > 0)
-                            😱
                         @else
-                            😎
                         @endif
                     @else
-                        😵
                     @endif
                 </div>
                 <div class="space-y-2 ">
@@ -95,12 +89,9 @@
                             @if($medium['ok'])
                                 {{ $medium['count'] }}
                                 @if($medium['count'] > 0)
-                                    😱
                                 @else
-                                    😎
                                 @endif
                             @else
-                                😵
                             @endif
                         </div>
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,12 +120,9 @@
                             @if($low['ok'])
                                 {{ $low['count'] }}
                                 @if($low['count'] > 0)
-                                    😱
                                 @else
-                                    😎
                                 @endif
                             @else
-                                😵
                             @endif
                         </div>
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -160,7 +148,6 @@
                     <div class="flex justify-between items-start">
                         @if(! $low['ok'])
                             <div class="flex items-center mb-8 mt-10 text-6xl font-bold">
-                                😵
                             </div>
                             <div>
                                 <p class="mb-8 mt-10 text-2xl">
@@ -178,11 +165,8 @@
                             </div>
                             <div class="flex items-center gap-2 text-6xl font-bold">
                                 @if($healthPercent >= 80)
-                                    😎
                                 @elseif($healthPercent >= 60)
-                                    😐
                                 @else
-                                    😱
                                 @endif
                             </div>
                             <svg class="absolute bottom-4 right-4 w-16 h-16 opacity-30" fill="currentColor" viewBox="0 0 24 24">
