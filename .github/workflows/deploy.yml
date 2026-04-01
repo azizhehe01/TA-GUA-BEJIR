@@ -46,3 +46,12 @@ jobs:
             php artisan view:cache
 
             echo "== Deploy selesai =="
+
+            cd ${{ secrets.PROJECT_PATH }}
+
+            echo "== DEBUG PATH =="
+            pwd
+            git log -1
+                  
+            git fetch origin
+            git reset --hard origin/main
