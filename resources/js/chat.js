@@ -20,7 +20,7 @@ export function initChat() {
     const mainSend = document.getElementById("chatSend");
     const micBtn = document.getElementById("chatMic");
 
-    const API_URL = "http://10.252.242.28:3232/chat";
+    const API_URL = "http://10.252.242.2:3232/chat";
     let busy = false;
     let recognition = null;
 
@@ -67,7 +67,7 @@ export function initChat() {
     function addUserBubble(text) {
         if (!chatBox) return;
         const el = document.createElement("div");
-        el.className = "self-end max-w-[80%] bg-orange-400 text-white rounded-4xl shadow p-2 break-words";
+        el.className = "self-end max-w-[80%] bg-orange-400 text-white rounded-4xl shadow p-4 break-words prose prose-sm";
         el.innerText = text;
         chatBox.appendChild(el);
         scrollChatToBottom();
