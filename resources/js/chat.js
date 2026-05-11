@@ -20,7 +20,7 @@ export function initChat() {
     const mainSend = document.getElementById("chatSend");
     const micBtn = document.getElementById("chatMic");
 
-    const API_URL = "http://10.252.242.2:3232/chat";
+    const API_URL = "http://10.252.242.28:3232/chat";
     let busy = false;
     let recognition = null;
 
