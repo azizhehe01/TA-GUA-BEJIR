@@ -105,21 +105,6 @@ export function initChat() {
         scrollChatToBottom();
     }
 
-    // ==================== MAIN LOGIC ====================
-    // async function sendToApi(message) {
-    //     const resp = await fetch(API_URL, {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({ message })
-    //     });
-
-    //     if (!resp.ok) {
-    //         const txt = await resp.text().catch(() => "error");
-    //         throw new Error(`API ${resp.status}: ${txt}`);
-    //     }
-    //     return resp.json();
-    // }
-    // 00000000000
     async function sendToApi(message) {
         const resp = await fetch(API_URL, {
             method: "POST",

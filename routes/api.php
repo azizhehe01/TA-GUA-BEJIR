@@ -13,7 +13,7 @@ Route::post('/chat-proxy', function (Request $request) {
 
     try {
         // Tambahkan withoutVerifying() untuk menghindari masalah SSL pada IP lokal
-        $response = Http::timeout(60)
+        $response = Http::timeout(180)
             ->withoutVerifying() 
             ->post('http://10.252.242.28:3232/chat', [
                 'message' => $message,
