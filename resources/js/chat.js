@@ -9,6 +9,8 @@ export function initChat() {
     
     // Elements
     const state1 = document.getElementById("state-1");
+    if (!state1 || state1.dataset.initialized === "true") return;
+    state1.dataset.initialized = "true";
     const state2 = document.getElementById("state-2");
 
     const starterBtns = document.querySelectorAll(".starter-btn");

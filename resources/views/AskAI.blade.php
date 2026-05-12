@@ -60,7 +60,7 @@
     </div>
 </div>
 
-<div id="state-2" class="{{ $hasChat ? '' : 'hidden' }} hidden min-h-screen flex flex-col items-center justify-between bg-slate-100 dark:bg-slate-900 p-6">
+<div id="state-2" class="{{ $hasChat ? '' : 'hidden' }} min-h-screen flex flex-col items-center justify-between bg-slate-100 dark:bg-slate-900 p-6">
 
     {{-- Chat Box --}}
     <div class="w-full max-w-xl flex flex-col gap-4 chat-box overflow-y-auto p-4" style="max-height:85vh;">
@@ -91,9 +91,3 @@
 </x-layouts.chatApp>
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        initChat();
-    });
-</script>
