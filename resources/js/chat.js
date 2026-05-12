@@ -20,7 +20,7 @@ export function initChat() {
     const mainSend = document.getElementById("chatSend");
     const micBtn = document.getElementById("chatMic");
 
-    const API_URL = "http://10.252.242.28:3232/chat";
+    const API_URL = "/api/chat-proxy";
     let busy = false;
     let recognition = null;
 
@@ -106,10 +106,27 @@ export function initChat() {
     }
 
     // ==================== MAIN LOGIC ====================
+    // async function sendToApi(message) {
+    //     const resp = await fetch(API_URL, {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify({ message })
+    //     });
+
+    //     if (!resp.ok) {
+    //         const txt = await resp.text().catch(() => "error");
+    //         throw new Error(`API ${resp.status}: ${txt}`);
+    //     }
+    //     return resp.json();
+    // }
+    // 00000000000
     async function sendToApi(message) {
         const resp = await fetch(API_URL, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
+            },
             body: JSON.stringify({ message })
         });
 
