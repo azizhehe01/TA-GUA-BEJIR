@@ -61,6 +61,39 @@ select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
 
+/* ... kode lo yang sudah ada ... */
+
+@layer components {
+    .custom-scrollbar {
+        /* Firefox */
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-pink-500) transparent;
+    }
+
+    /* Chrome, Safari, Edge */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: var(--color-pink-500); /* Warna default */
+        border-radius: 20px;
+        opacity: 0.3;
+    }
+
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: var(--color-pink-500); /* Warna saat dark mode */
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: var(--color-pink-500); /* Lebih terang pas di-hover */
+    }
+}
+
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */

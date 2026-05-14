@@ -22,9 +22,12 @@ export function initChat() {
     const mainSend = document.getElementById("chatSend");
     const micBtn = document.getElementById("chatMic");
 
-    const API_URL = "/api/chat-proxy";
+    const API_URL = "/chat-proxy";
     let busy = false;
     let recognition = null;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentConversationId = urlParams.get('id');
 
     // Speech Recognition
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -112,9 +115,14 @@ export function initChat() {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
                 "X-Requested-With": "XMLHttpRequest"
             },
-            body: JSON.stringify({ message })
+            // TAMBAHKAN currentConversationId DISINI
+            body: JSON.stringify({ 
+                message,
+                conversation_id: currentConversationId 
+            })
         });
 
         if (!resp.ok) {
@@ -122,6 +130,45 @@ export function initChat() {
             throw new Error(`API ${resp.status}: ${txt}`);
         }
         return resp.json();
+    }
+
+    async function loadHistory(id) {
+        showState2(); 
+        if (chatBox) chatBox.innerHTML = '';
+        try {
+            const resp = await fetch(`/chat/messages/${id}`, {
+                headers: { "X-Requested-With": "XMLHttpRequest" }
+            });
+
+            // Kalau chat gak ketemu (404), redirect manual ke halaman utama
+            if (resp.status === 404) {
+                window.location.href = '/AskAI';
+                return;
+            }
+        
+            if (!resp.ok) throw new Error("Gagal ambil history");
+            const data = await resp.json();
+            
+            // Bersihkan chat box dulu (kecuali starter state)
+            showState2();
+            chatBox.innerHTML = ''; 
+
+            // Looping data dari DB dan tampilin ke bubble
+            data.messages.forEach(msg => {
+                if (msg.role === 'user') {
+                    addUserBubble(msg.content);
+                } else {
+                    addBotBubble(msg.content);
+                }
+            });
+        } catch (err) {
+            console.error("Gagal load history:", err);
+        }
+    }
+
+    // Jalankan loadHistory kalau ada ID di URL
+    if (currentConversationId) {
+        loadHistory(currentConversationId);
     }
 
     async function handleSend(message) {
@@ -138,9 +185,18 @@ export function initChat() {
         starterSend?.setAttribute("disabled", "true");
 
         try {
-            const { response } = await sendToApi(message);
+            // Ambil seluruh objek data, jangan di-destructuring dulu
+            const data = await sendToApi(message);
+            const botResponse = data.response;
+
+            // Sekarang data.conversation_id sudah bisa diakses
+            if (!currentConversationId && data.conversation_id) {
+                currentConversationId = data.conversation_id;
+                window.history.pushState({}, '', `?id=${currentConversationId}`);
+            }
+
             removeTypingIndicator();
-            addBotBubble(response ?? String(response));
+            addBotBubble(botResponse ?? String(botResponse));
         } catch (err) {
             console.error("Chat API error:", err);
             removeTypingIndicator();

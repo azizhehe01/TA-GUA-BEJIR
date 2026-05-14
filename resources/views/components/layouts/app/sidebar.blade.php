@@ -5,10 +5,10 @@
     </head>
     <style>
         .chat-box {
-            scrollbar-width: none;           /* Firefox */
+            scrollbar-width: none;
         }
         .chat-box::-webkit-scrollbar {
-            display: none;                  /* Chrome, Edge, Safari */
+            display: none;
         }
     </style>
     <body class="min-h-screen bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800">
@@ -21,12 +21,11 @@
             
 
             <flux:navlist variant="outline">
+                <flux:navlist.item icon="sparkles" :href="route('AskAI')" :current="request()->routeIs('AskAI') && !request()->has('id')" wire:navigate>
+                    <b>{{ __('Chat Baru') }}</b>
+                </flux:navlist.item>
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home"  :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                </flux:navlist.group>
-
-                <flux:navlist.group :heading="__('Ask AI')" class="grid">
-                    <flux:navlist.item icon="chat-bubble-bottom-center"  :href="route('AskAI')" :current="request()->routeIs('AskAI')" wire:navigate>{{ __('Tanya AI aja gasi') }}</flux:navlist.item>
                 </flux:navlist.group>
 
                 @if(auth()->user() && auth()->user()->is_admin)
@@ -40,6 +39,96 @@
                         </flux:navlist.item>
                     </flux:navlist.group>
                 @endif
+
+                <flux:navlist.group :heading="__('History chat kamu ada disini')" class="grid">
+                    {{-- Container Scrollable --}}
+                    <div class="max-h-[280px] overflow-y-auto pr-2 custom-scrollbar">
+                        @foreach(auth()->user()->conversations()->orderBy('updated_at', 'desc')->get() as $chat)
+                            <div class="group relative flex items-center">
+
+                                {{-- Item Chat --}}
+                                <flux:navlist.item 
+                                    :href="route('AskAI', ['id' => $chat->id])" 
+                                    :current="request()->query('id') == $chat->id"
+                                    wire:navigate
+                                    class="flex-1 pr-8"
+                                >
+                                    {{ Str::limit($chat->title, 20) }}
+                                </flux:navlist.item>
+
+                                <div class="absolute right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <flux:modal.trigger name="delete-chat-{{ $chat->id }}">
+                                        <button type="button" class="text-slate-400 hover:text-red-500">
+                                            <flux:icon.trash variant="micro" />
+                                        </button>
+                                    </flux:modal.trigger>
+                                </div>
+
+                                {{-- Modal --}}
+                                <flux:modal 
+                                    name="delete-chat-{{ $chat->id }}" 
+                                    class="min-w-[26rem] p-4 !bg-transparent border-0 shadow-none [&_[aria-label='Close_modal']]:!hidden"
+                                >
+                                    <div class="!bg-white dark:!bg-white rounded-3xl px-8 py-9 flex flex-col items-center text-center shadow-xl">
+                                
+                                        {{-- Illustration --}}
+                                        <img 
+                                            src="{{ asset('images/delete-chat.png') }}" 
+                                            alt="Delete Chat"
+                                            class="w-50 h-50 object-contain mb-4 select-none"
+                                        >
+                                
+                                        {{-- Title --}}
+                                        <h2 class="text-xl font-bold text-zinc-800">
+                                            Hapus Riwayat Chat?
+                                        </h2>
+                                
+                                        {{-- Subtitle --}}
+                                        <p class="text-sm leading-relaxed text-zinc-500 mt-2 max-w-xs">
+                                            Yakin mau hapus chat ini?  
+                                            Tindakan ini tidak bisa dibatalkan.
+                                        </p>
+                                
+                                        {{-- Indicator --}}
+                                        <div class="flex gap-1.5 mt-5">
+                                            <div class="w-2 h-2 rounded-full bg-zinc-800"></div>
+                                            <div class="w-2 h-2 rounded-full bg-zinc-300"></div>
+                                            <div class="w-2 h-2 rounded-full bg-zinc-300"></div>
+                                        </div>
+                                
+                                        {{-- Buttons --}}
+                                        <div class="flex items-center justify-between w-full mt-8 px-2">
+                                
+                                            <flux:modal.close>
+                                                <button 
+                                                    type="button"
+                                                    class="text-sm font-semibold text-zinc-600 hover:text-black transition-colors"
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </flux:modal.close>
+                                
+                                            <form action="{{ route('chat.destroy', $chat->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                
+                                                <button 
+                                                    type="submit"
+                                                    class="text-sm font-semibold text-red-500 hover:text-red-600 transition-colors"
+                                                >
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                
+                                        </div>
+                                    </div>
+                                </flux:modal>
+
+                            </div>
+                        @endforeach
+                    </div>
+                </flux:navlist.group>
+
             </flux:navlist>
 
             

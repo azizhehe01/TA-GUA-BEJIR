@@ -5,7 +5,7 @@
     $hasChat = false;
 @endphp
 
-<div id="state-1" class="{{ $hasChat ? 'hidden' : '' }} min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 p-6">
+<div id="state-1" class="transition-opacity duration-200 {{ $hasChat ? 'hidden opacity-0' : 'opacity-100' }} min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 p-6">
     <div class="flex flex-col items-center gap-8">
 
         {{-- Icon Glow --}}
