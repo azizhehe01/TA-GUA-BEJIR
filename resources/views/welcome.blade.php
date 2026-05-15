@@ -16,27 +16,6 @@
                              class="w-full h-full object-contain">
                     </div>
                 </div>
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="#"
-                       class="font-medium text-slate-700 dark:text-slate-200 transition 
-                              hover:bg-gradient-to-br hover:from-orange-400 hover:to-amber-200 
-                              hover:bg-clip-text hover:text-transparent">
-                        Tentang Kami
-                    </a>
-                    <a href="#"
-                       class="font-medium text-slate-700 dark:text-slate-200 transition 
-                              hover:bg-gradient-to-br hover:from-orange-400 hover:to-amber-200 
-                              hover:bg-clip-text hover:text-transparent">
-                        Lainnya 
-                    </a>
-                    <a href="#"
-                       class="font-medium text-slate-700 dark:text-slate-200 transition 
-                              hover:bg-gradient-to-br hover:from-orange-400 hover:to-amber-200 
-                              hover:bg-clip-text hover:text-transparent">
-                        Layanan
-                    </a>
-                </div>
                 <!-- Buttons -->
                 <div class="flex items-center gap-3">
                     @guest

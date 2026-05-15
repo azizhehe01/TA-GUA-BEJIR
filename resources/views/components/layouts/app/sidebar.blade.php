@@ -134,12 +134,6 @@
             
             <flux:spacer />
 
-            <flux:navlist variant="outline">
-                <flux:navlist.item icon="folder-git-2" href="https://github.com/azizhehe01/TA-GUA-BEJIR.git" target="_blank">
-                {{ __('Repository') }}
-                </flux:navlist.item>
-            </flux:navlist>
-
             <!-- Desktop User Menu -->
             <flux:dropdown class="hidden lg:block" position="bottom" align="start">
                 <flux:profile
