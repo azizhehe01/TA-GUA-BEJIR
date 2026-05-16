@@ -1,0 +1,299 @@
+/* Base */
+
+body,
+body *:not(html):not(style):not(br):not(tr):not(code) {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    position: relative;
+}
+
+body {
+    -webkit-text-size-adjust: none;
+    background-color: #0f172b; /* DIUBAH: Mengikuti warna background biru gelap */
+    color: #334155; /* DIUBAH: Warna font utama dibikin abu gelap agar kontras di latar putih */
+    height: 100%;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+}
+
+p,
+ul,
+ol,
+blockquote {
+    line-height: 1.4;
+    text-align: left;
+}
+
+a {
+    color: #ff8a05; /* DIUBAH: Link teks biasa menggunakan warna oren */
+}
+
+a img {
+    border: none;
+}
+
+/* Typography */
+
+h1 {
+    color: #ff8a05; /* DIUBAH: Judul utama email menggunakan warna oren */
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 0;
+    text-align: left;
+}
+
+h2 {
+    color: #0f172b; /* DIUBAH: Subjudul menggunakan warna biru gelap */
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 0;
+    text-align: left;
+}
+
+h3 {
+    color: #0f172b;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 0;
+    text-align: left;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5em;
+    margin-top: 0;
+    text-align: left;
+}
+
+p.sub {
+    font-size: 12px;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* Layout */
+
+.wrapper {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    background-color: #0f172b; /* DIUBAH: Latar belakang luar email menjadi biru gelap */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.content {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* Header */
+
+.header {
+    padding: 25px 0;
+    text-align: center;
+}
+
+.header a {
+    color: #ff8a05; /* DIUBAH: Nama aplikasi di header menggunakan warna oren */
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Logo */
+
+.logo {
+    height: 75px;
+    max-height: 75px;
+    width: 75px;
+}
+
+/* Body */
+
+.body {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    background-color: #0f172b; /* DIUBAH: Penyelaras border luar sewarna biru gelap */
+    border-bottom: 1px solid #0f172b;
+    border-top: 1px solid #0f172b;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.inner-body {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 570px;
+    background-color: #ffffff; /* Kotak konten utama tetap putih bersih agar teks terbaca jelas */
+    border-color: #e2e8f0;
+    border-radius: 8px; /* DIUBAH: Sedikit lebih round agar modern */
+    border-width: 1px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    padding: 0;
+    width: 570px;
+}
+
+.inner-body a {
+    word-break: break-all;
+}
+
+/* Subcopy */
+
+.subcopy {
+    border-top: 1px solid #edf2f7;
+    margin-top: 25px;
+    padding-top: 25px;
+}
+
+.subcopy p {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Footer */
+
+.footer {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 570px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    width: 570px;
+}
+
+.footer p {
+    color: #94a3b8; /* DIUBAH: Warna footer disesuaikan agar abu-abu soft di atas background gelap */
+    font-size: 12px;
+    text-align: center;
+}
+
+.footer a {
+    color: #ff8a05; /* DIUBAH: Link di footer menjadi oren */
+    text-decoration: underline;
+}
+
+/* Tables */
+
+.table table {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 30px auto;
+    width: 100%;
+}
+
+.table th {
+    border-bottom: 1px solid #edeff2;
+    margin: 0;
+    padding-bottom: 8px;
+}
+
+.table td {
+    color: #475569;
+    font-size: 15px;
+    line-height: 18px;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.content-cell {
+    max-width: 100vw;
+    padding: 32px;
+}
+
+/* Buttons */
+
+.action {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 30px auto;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    float: unset;
+}
+
+.button {
+    -webkit-text-size-adjust: none;
+    border-radius: 6px; /* DIUBAH: Tombol sedikit lebih modis */
+    color: #ffffff !important; /* DIUBAH: Font di dalam tombol WAJIB putih */
+    display: inline-block;
+    overflow: hidden;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.button-blue,
+.button-primary {
+    background-color: #ff4b91; /* DIUBAH: Menggunakan warna Pink Cerah */
+    border-bottom: 10px solid #ff4b91;
+    border-left: 20px solid #ff4b91;
+    border-right: 20px solid #ff4b91;
+    border-top: 10px solid #ff4b91;
+}
+
+.button-green,
+.button-success {
+    background-color: #48bb78;
+    border-bottom: 8px solid #48bb78;
+    border-left: 18px solid #48bb78;
+    border-right: 18px solid #48bb78;
+    border-top: 8px solid #48bb78;
+}
+
+.button-red,
+.button-error {
+    background-color: #e53e3e;
+    border-bottom: 8px solid #e53e3e;
+    border-left: 18px solid #e53e3e;
+    border-right: 18px solid #e53e3e;
+    border-top: 8px solid #e53e3e;
+}
+
+/* Panels */
+
+.panel {
+    border-left: #ff4b91 solid 4px; /* DIUBAH: Border panel mengikuti warna pink */
+    margin: 21px 0;
+}
+
+.panel-content {
+    background-color: #f8fafc;
+    color: #475569;
+    padding: 16px;
+}
+
+.panel-content p {
+    color: #475569;
+}
+
+.panel-item {
+    padding: 0;
+}
+
+.panel-item p:last-of-type {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* Utilities */
+
+.break-all {
+    word-break: break-all;
+}
