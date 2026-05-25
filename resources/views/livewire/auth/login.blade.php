@@ -210,7 +210,7 @@ new #[Layout('components.layouts.auth.split')] class extends Component {
 
         <!-- caption -->
         <div class="absolute bottom-8 text-white text-center w-full">
-            <div class="text-lg font-semibold">SIEM BEJIR 🤖</div>
+            <div class="text-lg font-semibold">WAZHUB</div>
         </div>
     </div>
 
