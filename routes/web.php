@@ -87,7 +87,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
 
         try {
-            $response = Http::timeout(60)->withoutVerifying()->post('http://10.252.242.28:3232/chat', [
+            $response = Http::timeout(300)->withoutVerifying()->post('http://10.252.242.28:3232/chat', [
                 'message' => $messageText,
             ]);
 
