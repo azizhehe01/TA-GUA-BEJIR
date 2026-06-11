@@ -36,6 +36,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::get('/fim-dashboard', [DashboardController::class, 'fim'])
+    ->middleware(['auth', 'verified'])
+    ->name('fim.dashboard');
 
 Route::view('AskAI', 'AskAI')
     ->middleware(['auth', 'verified'])
