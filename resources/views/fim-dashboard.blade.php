@@ -330,68 +330,7 @@
 
                     <tbody class="divide-y divide-gray-300 bg-white">
                         @forelse($events as $event)
-                            <tr class="hover:bg-gray-100">
-                                <td class="px-4 py-3 whitespace-nowrap">
-                                    {{ optional($event->event_timestamp)->format('Y-m-d H:i') ?? '-' }}
-                                </td>
-
-                                <td class="px-4 py-3">
-                                    <div class="font-bold">{{ $event->agent_name ?? '-' }}</div>
-                                    <div class="text-xs text-gray-500">{{ $event->agent_ip ?? '-' }}</div>
-                                </td>
-
-                                <td class="px-4 py-3 max-w-md">
-                                    <div class="truncate font-medium" title="{{ $event->file_path }}">
-                                        {{ $event->file_path ?? '-' }}
-                                    </div>
-                                    <div class="text-xs text-gray-500">
-                                        Occurrence: {{ $event->occurrence_count ?? 1 }}
-                                        |
-                                        Rule: {{ $event->rule_id ?? '-' }}
-                                    </div>
-                                </td>
-
-                                <td class="px-4 py-3 whitespace-nowrap">
-                                    {{ $event->event_type ?? '-' }}
-                                </td>
-
-                                <td class="px-4 py-3 whitespace-nowrap">
-                                    <span class="rounded-full bg-black px-3 py-1 text-xs font-bold text-white">
-                                        {{ $event->risk_score }}
-                                    </span>
-                                </td>
-
-                                <td class="px-4 py-3 whitespace-nowrap">
-                                    @if($event->classification === 'aman')
-                                        <span class="rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white">
-                                            Aman
-                                        </span>
-                                    @elseif($event->classification === 'mencurigakan')
-                                        <span class="rounded-full bg-yellow-400 px-3 py-1 text-xs font-bold text-black">
-                                            Mencurigakan
-                                        </span>
-                                    @else
-                                        <span class="rounded-full bg-red-500 px-3 py-1 text-xs font-bold text-white">
-                                            Berbahaya
-                                        </span>
-                                    @endif
-                                </td>
-
-                                <td class="px-4 py-3 whitespace-nowrap">
-                                    <span class="rounded-full bg-purple-200 px-3 py-1 text-xs font-bold text-purple-900">
-                                        {{ $event->analysis_source ?? '-' }}
-                                    </span>
-                                </td>
-
-                                <td class="px-4 py-3 max-w-md">
-                                    <div class="line-clamp-2" title="{{ $event->reason }}">
-                                        {{ $event->reason ?? '-' }}
-                                    </div>
-                                    <div class="mt-1 text-xs text-gray-500 line-clamp-2" title="{{ $event->recommendation }}">
-                                        {{ $event->recommendation ?? '-' }}
-                                    </div>
-                                </td>
-                            </tr>
+                            @include('partials.fim-analysis-result-row', ['event' => $event])
                         @empty
                             <tr>
                                 <td colspan="8" class="px-4 py-8 text-center text-gray-500">
