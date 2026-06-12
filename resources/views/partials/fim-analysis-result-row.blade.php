@@ -91,8 +91,8 @@
     </td>
 
     <td class="px-4 py-3 max-w-md">
-        <div class="truncate font-medium" title="{{ $event->file_path }}">
-            {{ $event->file_path ?? '-' }}
+        <div class="font-medium" title="{{ $event->file_path }}">
+            {{ \Illuminate\Support\Str::limit($event->file_path ?? '-', 25, '...') }}
         </div>
         <div class="text-xs text-gray-500">
             Occurrence: {{ $event->occurrence_count ?? 1 }}
