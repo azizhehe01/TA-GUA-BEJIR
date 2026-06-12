@@ -17,7 +17,7 @@
                         type="date"
                         name="date"
                         value="{{ $date }}"
-                        class="rounded-lg border-2 border-gray-300 px-3 py-2 text-sm text-black"
+                        class="rounded-lg border-2 border-gray-300 bg-black px-3 py-2 text-sm text-white"
                     >
 
                     @if($classification)
@@ -38,7 +38,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
 
             {{-- Total --}}
-            <div class="bg-orange-600 p-4 rounded-lg relative overflow-hidden text-black">
+            <div class="bg-[#f0ecdd] p-4 rounded-lg relative overflow-hidden text-black">
                 <div class="text-6xl font-bold mb-8">
                     {{ $summary['total'] }}
                 </div>
@@ -130,7 +130,7 @@
                 </div>
 
                 {{-- Analysis Source --}}
-                <div class="col-span-2 bg-purple-300 p-4 rounded-lg text-black relative">
+                <div class="col-span-2 bg-[#f0ecdd] p-4 rounded-lg text-black relative">
                     <div class="flex justify-between items-start">
                         <div>
                             <div class="text-5xl font-bold mb-3">
@@ -210,12 +210,12 @@
                 </div>
 
                 {{-- Highest Risk --}}
-                <div class="bg-pink-400 p-4 rounded-lg text-black">
+                <div class="bg-[#f0ecdd] p-4 rounded-lg text-black">
                     @php
                         $highestRisk = $events->first();
                     @endphp
 
-                    <h2 class="text-2xl font-bold text-white mb-4">Highest Risk Event</h2>
+                    <h2 class="text-2xl font-bold text-black mb-4">Highest Risk Event</h2>
 
                     @if($highestRisk)
                         <div class="flex items-center gap-3 mb-3">
