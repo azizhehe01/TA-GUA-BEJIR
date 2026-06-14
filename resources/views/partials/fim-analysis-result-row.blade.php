@@ -102,7 +102,7 @@
     </td>
 
     <td class="px-4 py-3 whitespace-nowrap">
-        {{ $event->event_type ?? '-' }}
+        {{ \Illuminate\Support\Str::limit($event->event_type ?? '-', 25, '...') }}
     </td>
 
     <td class="px-4 py-3 whitespace-nowrap">
