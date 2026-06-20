@@ -73,6 +73,7 @@ select:focus[data-flux-control] {
     /* Chrome, Safari, Edge */
     .custom-scrollbar::-webkit-scrollbar {
         width: 5px;
+        height: 5px;
     }
 
     .custom-scrollbar::-webkit-scrollbar-track {

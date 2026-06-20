@@ -313,7 +313,7 @@
                 </div>
             </div>
 
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto custom-scrollbar">
                 <table class="min-w-full text-sm">
                     <thead class="bg-black text-white">
                         <tr>
