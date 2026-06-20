@@ -80,6 +80,10 @@ select:focus[data-flux-control] {
         background: transparent;
     }
 
+    .custom-scrollbar::-webkit-scrollbar-button {
+        display: none;
+    }
+
     .custom-scrollbar::-webkit-scrollbar-thumb {
         background-color: var(--color-pink-500); /* Warna default */
         border-radius: 20px;
