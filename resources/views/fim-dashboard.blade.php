@@ -24,6 +24,10 @@
                         <input type="hidden" name="classification" value="{{ $classification }}">
                     @endif
 
+                    @if($agent)
+                        <input type="hidden" name="agent" value="{{ $agent }}">
+                    @endif
+
                     <button
                         type="submit"
                         class="rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white"
@@ -175,28 +179,28 @@
 
                     <div class="grid grid-cols-2 gap-2 text-sm">
                         <a
-                            href="{{ route('fim.dashboard', ['date' => $date]) }}"
+                            href="{{ route('fim.dashboard', array_filter(['date' => $date, 'agent' => $agent])) }}"
                             class="rounded-lg px-3 py-2 font-semibold text-center {{ !$classification ? 'bg-black text-white' : 'bg-white border border-gray-300 text-black' }}"
                         >
                             Semua
                         </a>
 
                         <a
-                            href="{{ route('fim.dashboard', ['date' => $date, 'classification' => 'aman']) }}"
+                            href="{{ route('fim.dashboard', array_filter(['date' => $date, 'classification' => 'aman', 'agent' => $agent])) }}"
                             class="rounded-lg px-3 py-2 font-semibold text-center {{ $classification === 'aman' ? 'bg-green-600 text-white' : 'bg-white border border-gray-300 text-black' }}"
                         >
                             Aman
                         </a>
 
                         <a
-                            href="{{ route('fim.dashboard', ['date' => $date, 'classification' => 'mencurigakan']) }}"
+                            href="{{ route('fim.dashboard', array_filter(['date' => $date, 'classification' => 'mencurigakan', 'agent' => $agent])) }}"
                             class="rounded-lg px-3 py-2 font-semibold text-center {{ $classification === 'mencurigakan' ? 'bg-yellow-400 text-black' : 'bg-white border border-gray-300 text-black' }}"
                         >
                             Mencurigakan
                         </a>
 
                         <a
-                            href="{{ route('fim.dashboard', ['date' => $date, 'classification' => 'berbahaya']) }}"
+                            href="{{ route('fim.dashboard', array_filter(['date' => $date, 'classification' => 'berbahaya', 'agent' => $agent])) }}"
                             class="rounded-lg px-3 py-2 font-semibold text-center {{ $classification === 'berbahaya' ? 'bg-red-600 text-white' : 'bg-white border border-gray-300 text-black' }}"
                         >
                             Berbahaya
@@ -308,8 +312,33 @@
                     </p>
                 </div>
 
-                <div class="text-sm font-semibold">
-                    Total shown: {{ $events->count() }}
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    {{-- Filter Agent --}}
+                    <form method="GET" action="{{ route('fim.dashboard') }}" class="flex items-center gap-2">
+                        @if($classification)
+                            <input type="hidden" name="classification" value="{{ $classification }}">
+                        @endif
+                        @if($date)
+                            <input type="hidden" name="date" value="{{ $date }}">
+                        @endif
+
+                        <select 
+                            name="agent" 
+                            onchange="this.form.submit()" 
+                            class="rounded-lg border-2 border-gray-300 bg-white px-3 py-1.5 text-sm text-black focus:outline-none focus:border-black cursor-pointer"
+                        >
+                            <option value="">Semua Agent</option>
+                            @foreach($agentsList as $name)
+                                <option value="{{ $name }}" {{ $agent === $name ? 'selected' : '' }}>
+                                    {{ $name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+
+                    <div class="text-sm font-semibold whitespace-nowrap">
+                        Total shown: {{ $events->total() }}
+                    </div>
                 </div>
             </div>
 

@@ -46,6 +46,7 @@ class DashboardController extends Controller
     {
         $date = $request->query('date', now()->toDateString());
         $classification = $request->query('classification');
+        $agent = $request->query('agent');
 
         $baseQuery = FimAnalysisResult::whereDate('analysis_date', $date);
 
@@ -64,15 +65,26 @@ class DashboardController extends Controller
             $eventsQuery->where('classification', $classification);
         }
 
+        if ($agent) {
+            $eventsQuery->where('agent_name', $agent);
+        }
+
         $events = $eventsQuery
             ->orderByDesc('risk_score')
             ->orderByDesc('event_timestamp')
             ->paginate(10)
             ->withQueryString();
 
+        $agentsList = FimAnalysisResult::whereNotNull('agent_name')
+            ->orderBy('agent_name')
+            ->distinct()
+            ->pluck('agent_name');
+
         return view('fim-dashboard', compact(
             'date',
             'classification',
+            'agent',
+            'agentsList',
             'summary',
             'events'
         ));
