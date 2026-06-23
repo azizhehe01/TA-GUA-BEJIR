@@ -144,7 +144,7 @@
                     @endif
                 </div>
                 <!-- Alert Health Score -->
-                <div class="col-span-2 bg-purple-300 p-4  rounded-lg text-black relative">
+                <div class="col-span-2 bg-[#f0ecdd] border-2 border-gray-300 p-4  rounded-lg text-black relative">
                     <div class="flex justify-between items-start">
                         @if(! $low['ok'])
                             <div class="flex items-center mb-8 mt-10 text-6xl font-bold">
@@ -213,9 +213,9 @@
                 </div>
 
                 <!-- alert trend -->
-                <div class="bg-pink-400   p-4 rounded-lg text-black">
+                <div class="bg-[#f0ecdd] border-2 border-gray-300 p-4 rounded-lg text-black">
                     @if($growth['ok'])
-                        <h2 class="text-2xl font-bold text-white">Alert Trend (24h vs previous 24h)</h2>
+                        <h2 class="text-2xl font-bold">Alert Trend (24h vs previous 24h)</h2>
                 
                         <div class="flex items-center gap-3 mb-2">
                             @if($growth['up'])
@@ -227,7 +227,7 @@
                             @endif
                         </div>
 
-                        <div class="flex justify-between items-center text-sm text-gray-700 border-t-2  pt-3">
+                        <div class="flex justify-between items-center text-sm text-gray-700 border-t-2 border-gray-300 pt-3">
                             <div>
                                 <p class="font-semibold">{{ $growth['today'] }} alerts</p>
                                 <p class="opacity-70">Last 24 hours</p>
