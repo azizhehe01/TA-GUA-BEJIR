@@ -10,6 +10,11 @@
         .chat-box::-webkit-scrollbar {
             display: none;
         }
+        .chat-box pre,
+        .chat-box code {
+            white-space: pre-wrap !important;
+            word-break: break-all !important;
+        }
     </style>
     <body class="min-h-screen bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800">
         <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-slate-950">
