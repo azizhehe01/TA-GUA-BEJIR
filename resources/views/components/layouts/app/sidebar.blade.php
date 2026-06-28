@@ -17,7 +17,7 @@
         }
     </style>
     <body class="min-h-screen bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800">
-        <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-slate-950">
+        <flux:sidebar sticky stashable class="w-[270px] border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-slate-950">
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
             <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
@@ -57,12 +57,12 @@
                                     :href="route('AskAI', ['id' => $chat->id])" 
                                     :current="request()->query('id') == $chat->id"
                                     wire:navigate
-                                    class="flex-1 pr-14"
+                                    class="flex-1 pr-12"
                                 >
                                     {{ Str::limit($chat->title, 20) }}
                                 </flux:navlist.item>
 
-                                <div class="absolute right-2 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5">
+                                <div class="absolute right-2 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
                                     <flux:modal.trigger name="edit-chat-{{ $chat->id }}">
                                         <button type="button" class="text-slate-400 hover:text-blue-500">
                                             <flux:icon.pencil variant="micro" />
