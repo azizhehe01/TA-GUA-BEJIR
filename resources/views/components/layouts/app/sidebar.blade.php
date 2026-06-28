@@ -57,18 +57,68 @@
                                     :href="route('AskAI', ['id' => $chat->id])" 
                                     :current="request()->query('id') == $chat->id"
                                     wire:navigate
-                                    class="flex-1 pr-8"
+                                    class="flex-1 pr-14"
                                 >
                                     {{ Str::limit($chat->title, 20) }}
                                 </flux:navlist.item>
 
-                                <div class="absolute right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="absolute right-2 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5">
+                                    <flux:modal.trigger name="edit-chat-{{ $chat->id }}">
+                                        <button type="button" class="text-slate-400 hover:text-blue-500">
+                                            <flux:icon.pencil variant="micro" />
+                                        </button>
+                                    </flux:modal.trigger>
+
                                     <flux:modal.trigger name="delete-chat-{{ $chat->id }}">
                                         <button type="button" class="text-slate-400 hover:text-red-500">
                                             <flux:icon.trash variant="micro" />
                                         </button>
                                     </flux:modal.trigger>
                                 </div>
+
+                                {{-- Modal Edit --}}
+                                <flux:modal 
+                                    name="edit-chat-{{ $chat->id }}" 
+                                    class="min-w-[26rem] p-4 !bg-transparent border-0 shadow-none [&_[aria-label='Close_modal']]:!hidden"
+                                >
+                                    <div class="!bg-white dark:!bg-white rounded-3xl px-8 py-9 flex flex-col items-center shadow-xl text-zinc-800">
+                                
+                                        <h2 class="text-xl font-bold">
+                                            Edit Judul Chat
+                                        </h2>
+                                
+                                        <form action="{{ route('chat.update', $chat->id) }}" method="POST" class="w-full mt-4">
+                                            @csrf
+                                            @method('PATCH')
+                                
+                                            <input 
+                                                type="text" 
+                                                name="title" 
+                                                value="{{ $chat->title }}" 
+                                                required
+                                                class="w-full px-4 py-2.5 border border-zinc-300 rounded-xl outline-none focus:border-zinc-800 focus:ring-1 focus:ring-zinc-800"
+                                            >
+                                
+                                            <div class="flex items-center justify-between w-full mt-6 px-2">
+                                                <flux:modal.close>
+                                                    <button 
+                                                        type="button"
+                                                        class="text-sm font-semibold text-zinc-600 hover:text-black transition-colors"
+                                                    >
+                                                        Cancel
+                                                    </button>
+                                                </flux:modal.close>
+                                
+                                                <button 
+                                                    type="submit"
+                                                    class="text-sm font-semibold text-blue-500 hover:text-blue-600 transition-colors"
+                                                >
+                                                    Simpan
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </flux:modal>
 
                                 {{-- Modal --}}
                                 <flux:modal 

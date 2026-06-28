@@ -138,6 +138,23 @@ Route::delete('/chat/{conversation}', function (App\Models\Conversation $convers
     return redirect()->route('AskAI'); 
 })->name('chat.destroy');
 
+Route::patch('/chat/{conversation}', function (Illuminate\Http\Request $request, App\Models\Conversation $conversation) {
+    if ($conversation->user_id !== auth()->id()) {
+        abort(403);
+    }
+
+    $request->validate([
+        'title' => 'required|string|max:255',
+    ]);
+
+    $conversation->update([
+        'title' => $request->input('title'),
+    ]);
+
+    return back();
+})->name('chat.update');
+
+
 
 
 
