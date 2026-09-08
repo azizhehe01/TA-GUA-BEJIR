@@ -9,11 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // Hapus kolom status lama
-            $table->dropColumn('status');
+            // Hapus kolom status lama jika ada
+            if (Schema::hasColumn('users', 'status')) {
+                $table->dropColumn('status');
+            }
             
-            // Tambah kolom active baru
-            $table->boolean('active')->default(false);
+            // Tambah kolom active baru jika belum ada
+            if (!Schema::hasColumn('users', 'active')) {
+                $table->boolean('active')->default(false);
+            }
         });
     }
 
