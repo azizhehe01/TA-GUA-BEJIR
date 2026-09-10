@@ -90,11 +90,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
 
         try {
-            $response = Http::timeout(300)->withoutVerifying()->post('http://10.252.242.28:3232/chat', [
-                'message' => $messageText,
+            // Ambil riwayat percakapan agar AI memiliki konteks chat
+            $messages = $conversation->messages()
+                ->select(['role', 'content'])
+                ->orderBy('id', 'asc')
+                ->get()
+                ->map(fn ($m) => [
+                    'role' => $m->role,
+                    'content' => $m->content,
+                ])
+                ->toArray();
+
+            $apiUrl = env('AI_API_URL', 'http://127.0.0.1:3232/v1/chat/completions');
+            $model = env('AI_MODEL', 'wesjos/Qwen3-4B-toolcall-GGUF:Q4_K_M');
+
+            $response = Http::timeout(300)->withoutVerifying()->post($apiUrl, [
+                'model' => $model,
+                'messages' => $messages,
             ]);
 
-            $botResponse = $response->json()['response'] ?? 'Hadeh.. Botnya error nih, coba lagi nanti ya.🤣';
+            $jsonResponse = $response->json();
+            $botResponse = $jsonResponse['choices'][0]['message']['content'] 
+                ?? $jsonResponse['response'] 
+                ?? 'Hadeh.. Botnya error nih, coba lagi nanti ya.🤣';
 
             // 3. Simpan Pesan Bot
             $conversation->messages()->create([
